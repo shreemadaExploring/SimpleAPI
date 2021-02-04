@@ -1,0 +1,166 @@
+
+//check dotnet version
+sss@Shrinivas-PC MINGW64 ~
+$ dotnet --version 
+2.1.1-preview-007094
+
+//change directory
+sss@Shrinivas-PC MINGW64 ~
+$ cd E:\Git
+
+//list directory
+sss@Shrinivas-PC MINGW64 /e/Git
+$ ls
+desktop.ini  resume
+
+//create directory
+sss@Shrinivas-PC MINGW64 /e/Git
+$ mkdir SimpleApiSolution
+
+sss@Shrinivas-PC MINGW64 /e/Git
+$ cd SimpleApiSolution/
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ mkdir src
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ mkdir test
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ cd src/
+
+//create web api project
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src
+$ dotnet new webapi -n SimpleAPI
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src
+$ ls
+SimpleAPI
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src
+$ cd SimpleAPI/
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src/SimpleAPI
+$ ls
+appsettings.Development.json  Controllers  Program.cs        Startup.cs
+appsettings.json              obj          SimpleAPI.csproj  wwwroot
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src/SimpleAPI
+$ ls -a
+.   appsettings.Development.json  Controllers  Program.cs        Startup.cs
+..  appsettings.json              obj          SimpleAPI.csproj  wwwroot
+
+//build project
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src/SimpleAPI
+$ dotnet build
+Microsoft (R) Build Engine version 15.5.160.37545 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  SimpleAPI -> E:\Git\SimpleApiSolution\src\SimpleAPI\bin\Debug\netcoreapp2.0\SimpleAPI.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:21.35
+
+//change to previous directory
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/src
+$ cd -
+/e/Git
+
+sss@Shrinivas-PC MINGW64 /e/Git
+$ cd SimpleApiSolution/test/
+
+//create test project
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test
+$ dotnet new xunit -n SimpleAPI.Test
+
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test
+$ ls
+SimpleAPI.Test
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test
+$ cd SimpleAPI.Test/
+
+//build project
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test/SimpleAPI.Test
+$ dotnet build
+Microsoft (R) Build Engine version 15.5.160.37545 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  SimpleAPI.Test -> E:\Git\SimpleApiSolution\test\SimpleAPI.Test\bin\Debug\netcoreapp2.0\SimpleAPI.Test.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:11.98
+
+//run tests
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test/SimpleAPI.Test
+$ dotnet test
+Build started, please wait...
+Build completed.
+
+Test run for E:\Git\SimpleApiSolution\test\SimpleAPI.Test\bin\Debug\netcoreapp2.0\SimpleAPI.Test.dll(.NETCoreApp,Version=v2.0)
+Microsoft (R) Test Execution Command Line Tool Version 15.5.0-preview-20171012-09
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+[xUnit.net 00:00:04.7219573]   Discovering: SimpleAPI.Test
+[xUnit.net 00:00:04.8262446]   Discovered:  SimpleAPI.Test
+[xUnit.net 00:00:04.8868134]   Starting:    SimpleAPI.Test
+[xUnit.net 00:00:05.1447010]   Finished:    SimpleAPI.Test
+
+Total tests: 1. Passed: 1. Failed: 0. Skipped: 0.
+Test Run Successful.
+Test execution time: 6.3615 Seconds
+
+//go back to previous directory
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test/SimpleAPI.Test
+$ cd ..
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution/test
+$ cd ..
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ ls
+src  test
+
+//create solution file which will reference SimpleAPI and SimpleAPI.Test project
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ dotnet new sln --name SimpleAPISln
+The template "Solution File" was created successfully.
+
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ ls
+SimpleAPISln.sln  src  test
+
+//add reference
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ dotnet sln SimpleAPISln.sln add src/SimpleAPI/SimpleAPI.csproj test/SimpleAPI.Test/Si
+mpleAPI.Test.csproj
+Project `src\SimpleAPI\SimpleAPI.csproj` added to the solution.
+Project `test\SimpleAPI.Test\SimpleAPI.Test.csproj` added to the solution.
+
+//add api reference to test
+sss@Shrinivas-PC MINGW64 /e/Git/SimpleApiSolution
+$ dotnet add test/SimpleAPI.Test/SimpleAPI.Test.csproj reference src/SimpleAPI/SimpleAP
+I.csproj
+Reference `..\..\src\SimpleAPI\SimpleAPI.csproj` added to the project.
+
+//build both project by solution file we create
+$ dotnet build
+Microsoft (R) Build Engine version 15.5.160.37545 for .NET Core
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  SimpleAPI -> E:\Git\SimpleApiSolution\src\SimpleAPI\bin\Debug\netcoreapp2.0\SimpleAPI.dll
+  SimpleAPI.Test -> E:\Git\SimpleApiSolution\test\SimpleAPI.Test\bin\Debug\netcoreapp2.0\SimpleAPI.Test.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:27.20
